@@ -30,6 +30,7 @@ function reducer(state, { type, payload }) {
       ) {
         return state;
       }
+      console.log(state)
 
 
       return {
@@ -125,15 +126,15 @@ function evaluate({ currOperand, prevOperand, operation }) {
   return computation.toString();
 }
 
-// const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
-//   maximumFractionDigits: 5,
-// });
-// function formatOperand(operand) {
-//   if (operand == null) return;
-//   const [integer, decimal] = operand.split(",");
-//   if (decimal == null) return INTEGER_FORMATTER.format(integer);
-//   return `${INTEGER_FORMATTER.format(integer)}.${decimal}`;
-// }
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
+  maximumFractionDigits: 5,
+});
+function formatOperand(operand) {
+  if (operand == null) return;
+  const [integer, decimal] = operand.split(",");
+  if (decimal == null) return INTEGER_FORMATTER.format(integer);
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`;
+}
 
 function App() {
   const [{ currOperand, prevOperand, operation }, dispatch] = useReducer(
@@ -145,9 +146,9 @@ function App() {
     <div className="calculator-grid">
       <div className="output">
         <div className="previous-operand">
-          {prevOperand} {operation}
+          {formatOperand(prevOperand)} {operation}
         </div>
-        <div className="current-operand">{currOperand}</div>
+        <div className="current-operand">{formatOperand(currOperand)}</div>
       </div>
       <button
         className="span-two"
